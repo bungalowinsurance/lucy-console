@@ -12,7 +12,7 @@
     "basePath": "/api/v1",
     "securityDefinitions": {
         "Token": {
-            "description": "Simple HTTP Token authentication (i.e. an Authorization header field with\ntoken=test1234 as the value). Your token will be provided by Bungalow.\n",
+            "description": "Simple HTTP Token authentication (i.e. an 'Authorization' header field with\n'Token token=test1234' as the value). Your token will be provided by Bungalow.\n",
             "type": "apiKey",
             "name": "Authorization",
             "in": "header"
