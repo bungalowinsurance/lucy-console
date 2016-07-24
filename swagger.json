@@ -1,21 +1,34 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Uber API",
-        "description": "Move your app forward with the Uber API",
+        "title": "Bungalow Insurance API",
+        "description": "Generate quotes and purchase renters insurance via the Bungalow API, powered by Homesite.",
         "version": "1.0.0"
     },
-    "host": "api.uber.com",
+    "host": "staging.bungalowinsurance.com",
     "schemes": [
         "https"
     ],
-    "basePath": "/v1",
+    "basePath": "/api/v1",
+    "securityDefinitions": {
+        "Token": {
+            "description": "Simple HTTP Token authentication (e.g. an Authorization header field with token=test1234 as the value). Your token will be provided by Bungalow.",
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    },
     "produces": [
         "application/json"
     ],
     "paths": {
-        "/products": {
+        "/quote_requests": {
             "get": {
+                "security": [
+                    {
+                        "Token": []
+                    }
+                ],
                 "summary": "Product Types",
                 "description": "The Products endpoint returns information about the *Uber* products\noffered at a given location. The response includes the display name\nand other details about each product, and lists the products in the\nproper display order.\n",
                 "parameters": [
