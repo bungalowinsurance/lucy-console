@@ -56,6 +56,35 @@
                     }
                 }
             }
+        },
+        "/quote_requests/:quote_request_id/purchases": {
+            "post": {
+                "description": "This is the end point where the renters can purchase the insurance. A successful purchase will be returned with policy number and effective date of policy. \n",
+                "parameters": [
+                    {
+                        "name": "purchase",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/PurchaseRoot"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "A simple object with the policy number and effective date of policy for future reference.",
+                        "schema": {
+                            "$ref": "#/definitions/PurchaseResponse"
+                        }
+                    },
+                    "422": {
+                        "description": "Validation failure",
+                        "schema": {
+                            "$ref": "#/definitions/PurchaseResponseWithErrors"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -105,6 +134,66 @@
             "type": "object",
             "properties": {
                 "quote_request": {
+                    "type": "object",
+                    "properties": {
+                        "errors": {
+                            "type": "object",
+                            "properties": {
+                                "field_name": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "PurchaseRoot": {
+            "type": "object",
+            "properties": {
+                "purchase": {
+                    "$ref": "#/definitions/PurchaseRequest"
+                }
+            }
+        },
+        "PurchaseRequest": {
+            "type": "object",
+            "properties": {
+                "phone": {
+                    "type": "string",
+                    "description": "Phone number of payer"
+                }
+            }
+        },
+        "PurchaseResponse": {
+            "type": "object",
+            "properties": {
+                "purchase": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "type": "integer"
+                        },
+                        "policy_number": {
+                            "type": "string"
+                        },
+                        "effective_date_of_policy": {
+                            "type": "string"
+                        },
+                        "amount_payment_cents": {
+                            "type": "integer"
+                        }
+                    }
+                }
+            }
+        },
+        "PurchaseResponseWithErrors": {
+            "type": "object",
+            "properties": {
+                "purchase": {
                     "type": "object",
                     "properties": {
                         "errors": {
