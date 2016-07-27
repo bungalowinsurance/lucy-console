@@ -59,7 +59,7 @@
         },
         "/quote_requests/:quote_request_id/purchases": {
             "post": {
-                "description": "This is the end point where the renters can purchase the insurance. A successful purchase will be returned with policy number and effective date of policy. \n",
+                "description": "This is the end point where the renters can purchase the insurance. A successful purchase will be returned with paid amount, policy number and effective date of policy. \n",
                 "parameters": [
                     {
                         "name": "purchase",
@@ -165,6 +165,62 @@
                 "phone": {
                     "type": "string",
                     "description": "Phone number of payer"
+                },
+                "same_as_property_address": {
+                    "type": "boolean",
+                    "description": "Option for using the same address of the property. False value on this option will require mailing_address_line_1, mailing_city, mailing_state to be provided."
+                },
+                "mailing_address_line_1": {
+                    "type": "string",
+                    "description": "mailing address line 1"
+                },
+                "mailing_address_line_2": {
+                    "type": "string",
+                    "description": "(optional) mailing address line 2"
+                },
+                "mailing_city": {
+                    "type": "string",
+                    "description": "city of mailing address"
+                },
+                "mailing_state": {
+                    "type": "string",
+                    "description": "acronym for state of mailing address, i.e. 'CA', 'NY'"
+                },
+                "card_holder_first_name": {
+                    "type": "string",
+                    "description": "first name of credit card holder"
+                },
+                "card_holder_last_name": {
+                    "type": "string",
+                    "description": "last name of credit card holder"
+                },
+                "card_type": {
+                    "type": "string",
+                    "description": "options for type of the credit card are 'VISA', 'MasterCard', 'AmericanExpress', and 'Discover'"
+                },
+                "card_number": {
+                    "type": "string",
+                    "description": "number of the credit card"
+                },
+                "payment_plan": {
+                    "type": "string",
+                    "description": "options for payment plan are 'Yearly' or 'Monthly'"
+                },
+                "card_expiration_month": {
+                    "type": "string",
+                    "description": "month of credit card expiration, i.e. '10', '11'"
+                },
+                "card_expiration_year": {
+                    "type": "string",
+                    "description": "year of credit card expiration, i.e. '19'"
+                },
+                "electronic_signature": {
+                    "type": "string",
+                    "description": "electronic signature. This is required when payment_plan is 'Monthly'."
+                },
+                "referral_code": {
+                    "type": "string",
+                    "description": "referral code."
                 }
             }
         },
