@@ -114,6 +114,82 @@
                 "email": {
                     "type": "string",
                     "description": "Primary email of insured"
+                },
+                "ssn": {
+                    "type": "string",
+                    "description": "(optional unless Homesite required) 10 digits SSN number"
+                },
+                "property_address_line1": {
+                    "type": "string",
+                    "description": "address line 1 of insured property"
+                },
+                "property_address_line2": {
+                    "type": "string",
+                    "description": "(optional) address line 2 of insured property"
+                },
+                "property_city": {
+                    "type": "string",
+                    "description": "city of insured property"
+                },
+                "property_state": {
+                    "type": "string",
+                    "description": "state of insured property"
+                },
+                "property_zip": {
+                    "type": "string",
+                    "description": "zip code of insured property"
+                },
+                "prior_address_line1": {
+                    "type": "string",
+                    "description": "(optional unless Homesite required) prior address line 1"
+                },
+                "prior_address_line2": {
+                    "type": "string",
+                    "description": "(optional) prior address line 2"
+                },
+                "prior_city": {
+                    "type": "string",
+                    "description": "(optional unless Homesite required) city of prior address"
+                },
+                "prior_state": {
+                    "type": "string",
+                    "description": "(optional unless Homesite required) acronym for state of prior address, i.e. 'CA', 'NY'"
+                },
+                "prior_zip": {
+                    "type": "string",
+                    "description": "(optional unless Homesite required) zip code of prior address"
+                },
+                "dogs_or_pets": {
+                    "type": "boolean",
+                    "description": "Does insured have a dog(s) or a pet(s)?"
+                },
+                "dog_breed": {
+                    "type": "string",
+                    "description": "(required if dogs_or_pets is true) options for insured's dog are the followings\n  'Akita', 'Alaskan Malamute', 'Chow Chow', 'Doberman', 'Pit Bull', 'Rotweiller', 'Staffordshire Terrier', and 'NONE OF THE ABOVE'\n"
+                },
+                "animals_bitten": {
+                    "type": "boolean",
+                    "description": "(required if dogs_or_pets is true) has insured's dog ever bitten anyone?"
+                },
+                "number_of_apartments": {
+                    "type": "string",
+                    "description": "number of apartments in string, i.e. '1', '2', '3', etc."
+                },
+                "any_retiree": {
+                    "type": "boolean",
+                    "description": "is the insured or secondary insured retired?"
+                },
+                "residence_employees": {
+                    "type": "integer",
+                    "description": "number of full time employees who live in insured property."
+                },
+                "effective_date_of_policy": {
+                    "type": "string",
+                    "description": "Effective date of policy in YYYY-MM-DD format. Date must be greater than today and less than 60 days from today.\n"
+                },
+                "referral_source": {
+                    "type": "string",
+                    "description": "where does the insured know about Bungalow. you can put your client application name here."
                 }
             }
         },
