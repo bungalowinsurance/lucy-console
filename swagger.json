@@ -119,6 +119,18 @@
                     "type": "string",
                     "description": "(optional unless Homesite required) 10 digits SSN number"
                 },
+                "secondary_insured": {
+                    "type": "boolean",
+                    "description": "the secondary insured is a roommate or spouse who lives in the same residence. He or she will have equivalent coverage under the policy"
+                },
+                "secondary_insured_first_name": {
+                    "type": "string",
+                    "description": "(required when secondary_insured is true) First name of secondary insured, 20 characters max"
+                },
+                "secondary_insured_last_name": {
+                    "type": "string",
+                    "description": "(required when secondary_insured is true) Last name of secondary insured, 29 characters max"
+                },
                 "property_address_line1": {
                     "type": "string",
                     "description": "address line 1 of insured property"
@@ -165,19 +177,15 @@
                 },
                 "dog_breed": {
                     "type": "string",
-                    "description": "(required if dogs_or_pets is true) options for insured's dog are the followings\n  'Akita', 'Alaskan Malamute', 'Chow Chow', 'Doberman', 'Pit Bull', 'Rotweiller', 'Staffordshire Terrier', and 'NONE OF THE ABOVE'\n"
+                    "description": "(required when dogs_or_pets is true) options for insured's dog are the followings\n  'Akita', 'Alaskan Malamute', 'Chow Chow', 'Doberman', 'Pit Bull', 'Rotweiller', 'Staffordshire Terrier', and 'NONE OF THE ABOVE'\n"
                 },
                 "animals_bitten": {
                     "type": "boolean",
-                    "description": "(required if dogs_or_pets is true) has insured's dog ever bitten anyone?"
+                    "description": "(required when dogs_or_pets is true) has insured's dog ever bitten anyone?"
                 },
                 "number_of_apartments": {
                     "type": "string",
                     "description": "number of apartments in string, i.e. '1', '2', '3', etc."
-                },
-                "any_retiree": {
-                    "type": "boolean",
-                    "description": "is the insured or secondary insured retired?"
                 },
                 "residence_employees": {
                     "type": "integer",
@@ -189,7 +197,43 @@
                 },
                 "referral_source": {
                     "type": "string",
-                    "description": "where does the insured know about Bungalow. you can put your client application name here."
+                    "description": "Your application name."
+                },
+                "workers_compensation_policy": {
+                    "type": "boolean",
+                    "description": "(required when state is 'NJ' and residence_employees is greater than 0) Are the employees (if any) covered under a separate Workers Compensation Policy?"
+                },
+                "additional_interested_party": {
+                    "type": "boolean",
+                    "description": "(optional when state is 'PA') Did your landloard or property manager ask to be added as an 'additional interested party' to your policy?"
+                },
+                "storm_shutters": {
+                    "type": "boolean",
+                    "description": "(required when state is 'NY') Are all the doors, windows, skylights and vents fitted with hurricane resistant storm shutters?"
+                },
+                "laminated_glass": {
+                    "type": "boolean",
+                    "description": "(required when state is 'NY') Are all the doors, windows, and skylights fitted with hurricane resistant laminated glass?"
+                },
+                "guide_dog": {
+                    "type": "boolean",
+                    "description": "(required when state is 'NY' and dogs_or_pets is true) Is your dog a Certified Guide Dog?"
+                },
+                "claim_paid_to_third_party_from_bite": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MI' or 'MD' and dogs_or_pets is true) Has a claim been paid to a 3rd party (as a result of a bite)?"
+                },
+                "animal_aggressive": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MI' or 'MD' and dogs_or_pets is true) Have any of your dogs been declared aggressive by the state or community?"
+                },
+                "total_number_of_people": {
+                    "type": "integer",
+                    "description": "(required when state is not 'PA') How many people are living in your unit? Include residents who consider this address their primary home. Include dependent children, even if they are away at boarding school or college for most of the year."
+                },
+                "any_retiree": {
+                    "type": "boolean",
+                    "description": "(required when state is 'NY', 'CA' or 'CT') Is the insured or secondary insured retired?"
                 }
             }
         },
