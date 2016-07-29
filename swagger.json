@@ -234,6 +234,42 @@
                 "any_retiree": {
                     "type": "boolean",
                     "description": "(required when state is 'NY', 'CA' or 'CT') Is the insured or secondary insured retired?"
+                },
+                "home_day_care": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MD') Do you operate a Home Day Care in your home?"
+                },
+                "registered_day_care": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MD' and home_day_care is true) Is your home a registered Home Day Care facility?"
+                },
+                "certificate_number_day_care": {
+                    "type": "string",
+                    "description": "(required when state is 'MD', home_day_care is true and registered_day_care is true) Home Day Care certificate number"
+                },
+                "home_day_care_certificate_expires_on": {
+                    "type": "string",
+                    "description": "(required when state is 'MD', home_day_care is true and registered_day_care is true) Home Day care certificate expiration date in YYYY-MM-DD format"
+                },
+                "providers_day_care": {
+                    "type": "integer",
+                    "description": "(required when state is 'MD', home_day_care is true and registered_day_care is true) Home many Home Day Care providers are on the license?"
+                },
+                "children_day_care": {
+                    "type": "integer",
+                    "description": "(required when state is 'MD', and home_day_care is true) How many children are in your Home Day Care at a time?"
+                },
+                "children_under_two_day_care": {
+                    "type": "integer",
+                    "description": "(required when state is 'MD', and home_day_care is true) How many children are under the age of 2?"
+                },
+                "day_care_coverage": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MD' and home_day_care is true) Would you like Home Day Care Coverage?"
+                },
+                "seperate_building_day_care": {
+                    "type": "boolean",
+                    "description": "(required when state is 'MD', home_day_care is true, and day_care_coverag is true) Is the Day Care in a separate building located on your property?"
                 }
             }
         },
