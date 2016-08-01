@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "Bungalow Insurance API",
-        "description": "Generate quotes and purchase renters insurance via the Bungalow API,\npowered by Homesite. The general workflow is as follows:\n\n1. Request a quote\n2. Receive a webhook indicating that the quote is ready (20-30s)\n3. Retrieve the quote with various coverage options\n4. Update coverage options (optional)\n5. Purchase the quote with selected options\n6. Request the Evidence of Insurance PDF document\n\nIn some cases the webhook in #2 will indicate that a quote is unavailable,\neither due to ineligibility/disqualification or an inability to identify the renter. In the\nlatter case (depending on the state) you may be required to re-send the quote\nrequest with a social security number for the renter and a prior address.\n\nAll endpoints receive and return JSON. The steps above are documented (or will be\nshortly) on the left. The webhook is currently a simple POST request to an endpoint\nof your choice (to be coordinated with Bungalow) and will contain a very small\nJSON object indicating the status (e.g. { quote_request_id: 12, status: status } where status is one of 'rate_available', 'ssn_required', 'dnq', or 'provider_error'). If a rate is available, you should proceed to coverage options. Dnq and Provider errors indicate that you are not likely to receive a quote, either because the user\ndoes not qualify or because our insurance providers failed to process the request.\nIf SSN is required for renter identification you will need to resubmit the quote\nrequest with SSN and prior address information.\n\nThis documentation is a work in progress. For any questions or feedback please\nreach out to Paul Hiatt (paul@bungalowinsurance.com).\n",
+        "description": "Generate quotes and purchase renters insurance via the Bungalow API,\npowered by Homesite.\n",
         "version": "1.0.0"
     },
     "host": "staging.bungalowinsurance.com",
@@ -189,7 +189,7 @@
                 },
                 "residence_employees": {
                     "type": "integer",
-                    "description": "number of full time employees who live in insured property."
+                    "description": "(required when state is 'CA or 'NJ') number of full time employees who live in insured property."
                 },
                 "effective_date_of_policy": {
                     "type": "string",
@@ -270,6 +270,22 @@
                 "seperate_building_day_care": {
                     "type": "boolean",
                     "description": "(required when state is 'MD', home_day_care is true, and day_care_coverag is true) Is the Day Care in a separate building located on your property?"
+                },
+                "sprinklers_in_every_room": {
+                    "type": "boolean",
+                    "description": "(required when state is 'TX') Are there spinklers in every room, including bathrooms, attics, closets, and attached structures?"
+                },
+                "sprinklers_in_every_room_ex": {
+                    "type": "boolean",
+                    "description": "(required when state is 'TX') Are there sprinklers in every room, excluding bathrooms, attics, closets, or attached structures?"
+                },
+                "storm_protective_fixtures": {
+                    "type": "boolean",
+                    "description": "(required when state is 'VI', 'RI', or 'CT') Does your property have profesionally installed windstorm shutters or protective awnings (kept on the home throughout the entire year) or professionally installed foundation tiedowns?"
+                },
+                "renters_personal_property": {
+                    "type": "string",
+                    "description": "Personal property, i.e. '$20,000'"
                 }
             }
         },
