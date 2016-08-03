@@ -85,6 +85,25 @@
                     }
                 }
             }
+        },
+        "/quote_requests/:quote_request_id/eois": {
+            "get": {
+                "description": "This is the end point where the renters can get EOI document. This could be applied only with purchased quote request. A successful request will return EOI pdf data. \n",
+                "responses": {
+                    "201": {
+                        "description": "A simple object with the EOI pdf data. User will need to perform 64-bits decode in order to process it to a PDF file.\n",
+                        "schema": {
+                            "$ref": "#/definitions/EOIResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Quote Request was not purchased",
+                        "schema": {
+                            "$ref": "#/definitions/EOIResponseWithErrors"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
@@ -438,6 +457,22 @@
                     }
                 }
             }
+        },
+        "EOIResponse": {
+            "type": "object",
+            "properties": {
+                "eoi": {
+                    "type": "object",
+                    "properties": {
+                        "pdf_data": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "EOIResponseWithErrors": {
+            "type": "object"
         }
     }
 }
