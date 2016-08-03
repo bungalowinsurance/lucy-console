@@ -86,7 +86,7 @@
                 }
             }
         },
-        "/quote_requests/:quote_request_id/eois": {
+        "/quote_requests/:quote_request_id/eoi": {
             "get": {
                 "description": "This is the end point where the renters can get EOI document. This could be applied only with purchased quote request. A successful request will return EOI pdf data. \n",
                 "responses": {
