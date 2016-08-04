@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "Bungalow Insurance API",
-        "description": "Generate quotes and purchase renters insurance via the Bungalow API, powered by Homesite. The general workflow is as follows:\n\n1. Request a quote\n2. Receive a webhook indicating that the quote is ready (20-30s)\n3. Retrieve the quote with various coverage options\n4. Update coverage options (optional)\n5. Purchase the quote with selected options\n6. Request the Evidence of Insurance PDF document\n\nThe quote request in #1 is the entry point to our API but we also recommend that you validate and/or correct the address provided by the user before requesting a quote. There are several reliable (and free) API services that provide this functionality. Behind the scenes we use Lob.com's service for https://www.bungalowinsurance.com.\n\nIn some cases the webhook in #2 will indicate that a quote is unavailable, either due to ineligibility/disqualification or an inability to identify the renter. In the latter case (depending on the state) you may be required to re-send the quote request with a social security number for the renter and a prior address.\n\nAll endpoints receive and return JSON. The steps above are documented (or will be shortly) on the left. The webhook is currently a simple POST request to an endpoint of your choice (coordinate with Bungalow to configure) and will contain a very small JSON object indicating the status (e.g. { quote_request_id: 12, status: status } where status is one of 'rate_available', 'ssn_required', 'dnq', or 'provider_error').\n\nIf a rate is available, you should proceed to coverage options. Dnq and Provider errors indicate that you are not likely to receive a quote, either because the user does not qualify or because our insurance providers failed to process the request.\n\nIf SSN is required for renter identification you will need to resubmit the quote request with SSN and prior address information.\n\nThis documentation is a work in progress. For any questions or feedback please reach out to Paul Hiatt (paul@bungalowinsurance.com).\n",
+        "description": "Generate quotes and purchase renters insurance via the Bungalow API, powered by Homesite. The general workflow is as follows:\n\n1. Request a quote: POST /quote_requests\n2. Receive a webhook indicating that the quote is ready (20-30s)\n3. Retrieve the quote with various coverage options: GET /quote_requests/:quote_request_id/coverage_options\n4. Update coverage options (optional): PATCH /quote_requests/:quote_request_id/coverage_options\n5. Purchase the quote with selected options: POST /quote_requests/:quote_request_id/purchases\n6. Request the Evidence of Insurance PDF document: GET /api/v1/quote_requests/:quote_request_id/eoi\n\nThe quote request in #1 is the entry point to our API but we also recommend that you validate and/or correct the address provided by the user before requesting a quote. There are several reliable (and free) API services that provide this functionality. Behind the scenes we use Lob.com's service for https://www.bungalowinsurance.com.\n\nAll endpoints receive and return JSON. The steps above are documented (or will be shortly) on the left. The webhook in #2 is currently a simple POST request to an endpoint of your choice (coordinate with Bungalow to configure) and will contain a small JSON object indicating the status (e.g. { quote_request_id: 12, status: status } where status is one of 'rate_available', 'ssn_required', 'dnq', or 'provider_error').\n\nIn some cases the webhook will indicate that a quote is unavailable, either due to ineligibility/disqualification or an inability to identify the renter (webhook status will be 'dnq' or 'provider_error'). The status may also be 'ssn_required', in which case you are required to re-send the quote request with a social security number for the renter and a prior address: PATCH /api/v1/quote_requests/:quote_request_id/ssn.\n\nIf a rate is available (status is 'rate_available'), you should proceed to quote retrieval/coverage options in #3.\n\nThis documentation is a work in progress. For any questions or feedback please reach out to Paul Hiatt (paul@bungalowinsurance.com).\n",
         "version": "1.0.0"
     },
     "host": "staging.bungalowinsurance.com",
@@ -59,7 +59,7 @@
         },
         "/quote_requests/:quote_request_id/purchases": {
             "post": {
-                "description": "This is the end point where the renters can purchase the insurance. A successful purchase will be returned with paid amount, policy number and effective date of policy. \n",
+                "description": "This is the end point to purchase insurance based on your quote. A successful purchase will be returned with the amount paid, the policy number and the effective date. \n",
                 "parameters": [
                     {
                         "name": "purchase",
@@ -88,10 +88,10 @@
         },
         "/quote_requests/:quote_request_id/eoi": {
             "get": {
-                "description": "This is the end point where the renters can get EOI document. This could be applied only with purchased quote request. A successful request will return EOI pdf data. \n",
+                "description": "Request an evidence insurance document after a successful purchase.\n",
                 "responses": {
                     "201": {
-                        "description": "A simple object with the EOI pdf data. User will need to perform 64-bits decode in order to process it to a PDF file.\n",
+                        "description": "A JSON object with the EOI PDF data encoded in base64.\n",
                         "schema": {
                             "$ref": "#/definitions/EOIResponse"
                         }
@@ -172,7 +172,7 @@
                 },
                 "prior_address_line1": {
                     "type": "string",
-                    "description": "(optional unless Homesite required) prior address line 1"
+                    "description": "(optional) prior address line 1"
                 },
                 "prior_address_line2": {
                     "type": "string",
@@ -180,7 +180,7 @@
                 },
                 "prior_city": {
                     "type": "string",
-                    "description": "(optional unless Homesite required) city of prior address"
+                    "description": "(optional) city of prior address"
                 },
                 "prior_state": {
                     "type": "string",
@@ -188,7 +188,7 @@
                 },
                 "prior_zip": {
                     "type": "string",
-                    "description": "(optional unless Homesite required) zip code of prior address"
+                    "description": "(optional) zip code of prior address"
                 },
                 "dogs_or_pets": {
                     "type": "boolean",
@@ -196,7 +196,7 @@
                 },
                 "dog_breed": {
                     "type": "string",
-                    "description": "(required when dogs_or_pets is true) options for insured's dog are the followings\n  'Akita', 'Alaskan Malamute', 'Chow Chow', 'Doberman', 'Pit Bull', 'Rotweiller', 'Staffordshire Terrier', and 'NONE OF THE ABOVE'\n"
+                    "description": "(required when dogs_or_pets is true) options for insured's dog are the following:\n  'Akita', 'Alaskan Malamute', 'Chow Chow', 'Doberman', 'Pit Bull', 'Rotweiller', 'Staffordshire Terrier', and 'NONE OF THE ABOVE'\n"
                 },
                 "animals_bitten": {
                     "type": "boolean",
@@ -204,7 +204,7 @@
                 },
                 "number_of_apartments": {
                     "type": "string",
-                    "description": "number of apartments in string, i.e. '1', '2', '3', etc."
+                    "description": "'number of apartments in building, i.e. ''1'', ''2'', ''3'', etc.' up to '9', or \"10 or more\"\n"
                 },
                 "residence_employees": {
                     "type": "integer",
@@ -304,7 +304,7 @@
                 },
                 "renters_personal_property": {
                     "type": "string",
-                    "description": "Personal property, i.e. '$20,000'"
+                    "description": "Personal property amount, one of: \"$15,000\", \"$20,000\", \"$25,000\", \"$30,000\", \"Other Amount\"\n"
                 }
             }
         },
