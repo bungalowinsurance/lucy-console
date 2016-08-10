@@ -480,12 +480,49 @@
                             "type": "string"
                         },
                         "coverage_fields": {
-                            "type": "object"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/CoverageField"
+                            }
                         },
                         "coverage_values": {
-                            "type": "object"
+                            "type": "object",
+                            "description": "A JSON object for covered coverage options from Homesite. This is dynamically generated for each quote request. Example of responses are shown below.",
+                            "properties": {
+                                "personal_property": {
+                                    "type": "string"
+                                },
+                                "personal_liability": {
+                                    "type": "string"
+                                }
+                            }
                         }
                     }
+                }
+            }
+        },
+        "CoverageField": {
+            "type": "object",
+            "description": "description of field Homesite is using for each coverage option.",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "description": "this value will be used to match with key provided in coverage_values, i.e. personal_property, personal_liability"
+                },
+                "label": {
+                    "type": "string"
+                },
+                "type": {
+                    "type": "string"
+                },
+                "homesite_id": {
+                    "type": "string"
+                },
+                "info": {
+                    "type": "string"
+                },
+                "required": {
+                    "type": "boolean"
                 }
             }
         },
