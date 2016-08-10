@@ -65,6 +65,14 @@
                         "in": "path",
                         "type": "integer",
                         "required": true
+                    },
+                    {
+                        "name": "ssn",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/SsnRequest"
+                        }
                     }
                 ],
                 "description": "Provide additional identifying information (ssn, prior address) if the\nwebhook indicates that additional information is required for a quote.\n",
@@ -88,7 +96,13 @@
                 "description": "Request quote details and coverage options after the webhook indicating that\na rate is available.\n",
                 "responses": {
                     "201": {
-                        "description": "A JSON object with quote details and coverage options.\n"
+                        "description": "A JSON object with quote details and coverage options. Coverage fields and coverage values are dynamic response returned from Homesite.\n",
+                        "schema": {
+                            "$ref": "#/definitions/CoverageOptionsResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "The quote request is not ready yet"
                     }
                 }
             },
@@ -99,12 +113,23 @@
                         "in": "path",
                         "type": "integer",
                         "required": true
+                    },
+                    {
+                        "name": "coverage_options",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/CoverageOptionsRequest"
+                        }
                     }
                 ],
                 "description": "Update coverage options (e.g. personal property amounts) based on options\nprovided in the /coverage_options GET request (documented above).\n",
                 "responses": {
                     "200": {
-                        "description": "A JSON object with quote details and coverage options.\n"
+                        "description": "A JSON object with quote details and coverage options. Coverage fields and coverage values are dynamic response returned from Homesite.\n",
+                        "schema": {
+                            "$ref": "#/definitions/CoverageOptionsResponse"
+                        }
                     }
                 }
             }
@@ -403,6 +428,62 @@
                                     }
                                 }
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "SsnRequest": {
+            "type": "object",
+            "properties": {
+                "ssn": {
+                    "type": "object",
+                    "description": "A JSON object which contains the address where the renter was staying before moving to the current insured.",
+                    "properties": {
+                        "ssn": {
+                            "type": "string"
+                        },
+                        "prior_address_line1": {
+                            "type": "string"
+                        },
+                        "prior_address_line2": {
+                            "type": "string"
+                        },
+                        "prior_city": {
+                            "type": "string"
+                        },
+                        "prior_zip": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "CoverageOptionsRequest": {
+            "type": "object",
+            "properties": {
+                "coverage_options": {
+                    "type": "object"
+                }
+            }
+        },
+        "CoverageOptionsResponse": {
+            "type": "object",
+            "properties": {
+                "coverage_options": {
+                    "type": "object",
+                    "properties": {
+                        "quote_number": {
+                            "type": "string"
+                        },
+                        "annual_cost": {
+                            "type": "string"
+                        },
+                        "coverage_fields": {
+                            "type": "object"
+                        },
+                        "coverage_values": {
+                            "type": "object"
                         }
                     }
                 }
