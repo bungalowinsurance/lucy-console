@@ -118,6 +118,7 @@
                         "name": "coverage_options",
                         "in": "body",
                         "required": true,
+                        "description": "The coverage_options param is a JSON object with the same format as the coverage_values object from the GET request, e.g. { personal_property: '$20,000'} and must contain all keys as were found in the coverage_values object. Contact Paul if you are confused, this is an unusual API pattern but is necessary due to our underlying provider's unpredicatable response structure.\n",
                         "schema": {
                             "$ref": "#/definitions/CoverageOptionsRequest"
                         }
