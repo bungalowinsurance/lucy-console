@@ -299,7 +299,7 @@
                 },
                 "residence_employees": {
                     "type": "integer",
-                    "description": "(required when state is 'CA or 'NJ') number of full time employees who live in insured property."
+                    "description": "(required when state is 'CA' or 'NJ') number of full time employees who live in insured property."
                 },
                 "effective_date_of_policy": {
                     "type": "string",
@@ -307,7 +307,7 @@
                 },
                 "referral_source": {
                     "type": "string",
-                    "description": "Your application name."
+                    "description": "Your application name (e.g. 'apartmentsRus'). Just a quick way to determine where quote requests are coming from."
                 },
                 "workers_compensation_policy": {
                     "type": "boolean",
@@ -592,10 +592,6 @@
                 "electronic_signature": {
                     "type": "string",
                     "description": "electronic signature. This is required when payment_plan is 'Monthly'."
-                },
-                "referral_code": {
-                    "type": "string",
-                    "description": "referral code."
                 }
             }
         },
