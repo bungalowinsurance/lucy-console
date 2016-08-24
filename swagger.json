@@ -188,8 +188,8 @@
                             "$ref": "#/definitions/EOIResponse"
                         }
                     },
-                    "401": {
-                        "description": "Quote Request was not purchased",
+                    "422": {
+                        "description": "Quote Request was not purchased, or EOI document is not available for download",
                         "schema": {
                             "$ref": "#/definitions/EOIResponseWithErrors"
                         }
