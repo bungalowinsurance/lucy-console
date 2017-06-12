@@ -619,7 +619,7 @@
                         "effective_date_of_policy": {
                             "type": "string"
                         },
-                        "amount_payment_cents": {
+                        "payment_amount_cents": {
                             "type": "integer"
                         },
                         "eoi_available_at": {
